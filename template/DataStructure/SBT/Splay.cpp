@@ -84,7 +84,7 @@ struct Splay{
 					splay(u);
 					return w[u];
 				}
-				x-=cnt[u];
+				k-=cnt[u];
 				u=son[u][1];
 			}
 		}
