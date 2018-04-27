@@ -8,12 +8,13 @@ struct Splay{
     void ini() {
     	rt=L=0;
 	}
-	void newnode(int c, int f=0) {
+	int newnode(int c, int f=0) {
 		w[++L]=c;
 		siz[L]=cnt[L]=1;
 		son[L][0]=son[L][1]=0;
 		fa[L]=f;
 		if(f) son[f][w[f]<c]=L;
+		return L;
 	}
     void up(int x) {
         siz[x] = siz[son[x][1]] + siz[son[x][0]] + cnt[x];
@@ -23,12 +24,12 @@ struct Splay{
     }
     void rot(int x) {
         int y=fa[x], z=fa[y];
-        int l=(son[y][1]==x), r=(l^1);
+        int l=id(x), r=(l^1);
         son[y][l]=son[x][r];
         if(son[y][l]) fa[son[y][l]]=y;
         fa[y]=x; son[x][r]=y;
         fa[x]=z;
-        if(z) son[z][son[z][1]==y]=x;
+        if(z) son[z][id(y)]=x;
         up(y); up(x);
     }
     void splay(int x, int g=0) {
@@ -48,7 +49,12 @@ struct Splay{
     void ins(int c) {
     	int u, f;
     	for(u=rt, f=0; u && w[u]!=c; f=u, u=son[u][w[u]<c]) ;
-    	if(u) ++cnt[u]; else newnode(u, f);
+    	if(u) {
+    		++cnt[u];
+		} else {
+			u=newnode(c, f);
+			if(!rt) rt=u;
+		}
     	up(u); splay(u);
     }
     int Next(int c, int t) { // pre 0, ne 1
