@@ -1,104 +1,176 @@
-// init 
-// 0 is virtual 
-// fa[rt] = 0
-struct Splay{
+/// init!!
+struct Splay {
+	#define ls son[u][0]
+	#define rs son[u][1]
 	static const int N=101010;
 	int rt, L;
-    int w[N], siz[N], cnt[N], son[N][2], fa[N];
-    void ini() {
-    	rt=L=0;
+	int w[N], fa[N], son[N][2], cnt[N], siz[N];
+	void init() {
+		fill_n(w, L+1, 0);
+		fill_n(fa, L+1, 0);
+		fill_n(cnt, L+1, 0);
+		fill_n(siz, L+1, 0);
+		fill_n(son[0], L+1, 0);
+		fill_n(son[1], L+1, 0);
+		L=rt=0;
 	}
-	int newnode(int c, int f=0) {
-		w[++L]=c;
-		siz[L]=cnt[L]=1;
-		son[L][0]=son[L][1]=0;
-		fa[L]=f;
-		if(f) son[f][w[f]<c]=L;
-		return L;
+	void up(int u) {
+		if(!u) return ;
+		siz[u]=cnt[u];
+		if(ls) siz[u]+=siz[ls];
+		if(rs) siz[u]+=siz[rs]; 
 	}
-    void up(int x) {
-        siz[x] = siz[son[x][1]] + siz[son[x][0]] + cnt[x];
-    }
-    int id(int x) {
-        return son[fa[x]][1]==x;
-    }
-    void rot(int x) {
-        int y=fa[x], z=fa[y];
-        int l=id(x), r=(l^1);
-        son[y][l]=son[x][r];
-        if(son[y][l]) fa[son[y][l]]=y;
-        fa[y]=x; son[x][r]=y;
-        fa[x]=z;
-        if(z) son[z][id(y)]=x;
-        up(y); up(x);
-    }
-    void splay(int x, int g=0) {
-    	while(fa[x]!=g) {
-    		int y=fa[x], z=fa[y];
-    		if(z!=g) (id(y)^id(x))?rot(x):rot(y);
-    		rot(x);
+	int id(int u) {
+		return son[fa[u]][1]==u;
+	}
+	void rot(int x) {
+		int y=fa[x], z=fa[y];
+		int l=id(x), r=(l^1);
+		fa[x]=z;
+		if(z) son[z][id(y)]=x;
+		son[y][l]=son[x][r];
+		if(son[y][l]) fa[son[y][l]]=y;
+		son[x][r]=y;
+		fa[y]=x;
+		up(y); up(x);
+	}	
+	void splay(int x, int g=0) {
+		while(fa[x]!=g) {
+			int y=fa[x], z=fa[y];
+			if(z!=g) (id(x)^id(y))?rot(x):rot(y);
+			rot(x);
 		}
-        if(!g) rt=x;
-    }
-    void find(int c) {
-    	if(!rt) return ;
-    	int u;
-    	for(u=rt; w[u]!=c && son[u][w[u]<c]; ) u=son[u][w[u]<c];
-    	splay(u);
+		if(!g) rt=x;
 	}
-    void ins(int c) {
-    	int u, f;
-    	for(u=rt, f=0; u && w[u]!=c; f=u, u=son[u][w[u]<c]) ;
-    	if(u) {
-    		++cnt[u];
-		} else {
-			u=newnode(c, f);
-			if(!rt) rt=u;
+	void ins(int c) {
+		if(!rt) {
+			w[++L]=c;
+			cnt[L]=siz[L]=1;
+			rt=L;
+			return ;
 		}
-    	up(u); splay(u);
-    }
-    int Next(int c, int t) { // pre 0, ne 1
-    	find(c);
-    	int u=rt;
-    	if(w[u] > c && t) return u;
-    	if(w[u] < c && !t) return u;
-    	u = son[u][t];
-    	while(son[u][!t]) u = son[u][!t];
-    	return u;
-	}
-	void del(int c) {
-		int pre = Next(c, 0);
-		int ne = Next(c, 1);
-		splay(pre, 0);
-		splay(ne, pre);
-		int u=son[ne][0];
-		if(cnt[u]>1) {
-			--cnt[u];
-			up(u); splay(u);
-		} else {
-			son[ne][0]=0;
-			up(ne); up(pre);
-		}
-	}
-    int mink(int k) {
-    	for(int u=rt;;) {
-    		if(k<=siz[son[u][0]]) {
-    			u=son[u][0];
-			} else {
-				k-=siz[son[u][0]];
-				if(k<=cnt[u]) {
-					splay(u);
-					return w[u];
-				}
-				k-=cnt[u];
-				u=son[u][1];
+		int u=rt, f=0;
+		while(1) {
+			if(c==w[u]) {
+				++cnt[u];
+				up(u); up(f);
+				splay(u);
+				return ;
+			}
+			f=u;
+			u=son[u][w[u]<c];
+			if(!u) {
+				w[++L]=c;
+				fa[L]=f;
+				if(f) son[f][w[f]<c]=L;
+				cnt[L]=siz[L]=1;
+				up(f);
+				splay(L);
+				return ;
 			}
 		}
-    }
-    int rank(int c) {
-    	find(c);
-    	if(!rt) return 1;
-    	if(c<=w[rt]) return siz[son[rt][0]]+1;
-    	else return siz[son[rt][0]]+cnt[rt]+1;
-    }
-};
+	}
+	// c in splay
+	// splay(u)
+	int rank(int c) {
+		int u=rt, ans=0;
+		while(1) {
+			if(c<w[u]) {
+				u=ls;
+			} else if(c==w[u]) {
+				if(ls) ans+=siz[ls];
+				splay(u);
+				return ans+1;
+			} else {
+				ans+=cnt[u];
+				if(ls) ans+=siz[ls];
+				u=rs;
+			}
+		}
+	}
+	// return w[u]
+	int mink(int k) {
+		int u=rt;
+		while(1) {
+			if(siz[ls]>=k) {
+				u=ls;
+			} else {
+				k-=siz[ls];
+				if(cnt[u]>=k) {
+					splay(u);
+					return w[u];
+				} else {
+					k-=cnt[u];
+					u=rs;
+				}
+			}
+		}
+	}
+	// Next of rt
+	// 0 pre 1 next
+	// return u
+	int Next(int t) {
+		int u=son[rt][t];
+		while(son[u][t^1]) u=son[u][t^1];
+		return u;
+	}
+	void del(int c) {
+		rank(c);
+		int u=rt;
+		if(cnt[rt]>1) {
+			--cnt[rt];
+			up(rt);
+			return ;
+		}
+		if(ls&&rs) {
+			int pre=Next(0);
+			int ne=Next(1);
+			splay(pre);
+			splay(ne, pre);
+			son[ne][0]=0;
+			up(ne);
+			up(pre);
+		} else if(ls) {
+			rt=ls;
+			fa[ls]=0;
+		} else if(rs) {
+			rt=rs;
+			fa[rs]=0;
+		} else {
+			rt=0;
+		}
+	}
+}T;
+
+int main() {
+	T.init();
+	int n;scanf("%d",&n);
+	while(n--) {
+		int t, x;scanf("%d%d",&t,&x);
+		switch(t) {
+			case 1:
+				T.ins(x);
+				break;
+			case 2:
+				T.del(x);
+				break;
+			case 3:
+				printf("%d\n",T.rank(x));
+				break;
+			case 4:
+				printf("%d\n",T.mink(x));
+				break;
+			case 5:
+				T.ins(x);
+				printf("%d\n",T.w[T.Next(0)]);
+				T.del(x);
+				break;
+			case 6:
+				T.ins(x);
+				printf("%d\n",T.w[T.Next(1)]);
+				T.del(x);
+				break;
+		}
+	}
+	return 0;
+}
