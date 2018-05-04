@@ -25,7 +25,7 @@ struct fhqTreap {
     int newnode(int c) {
         w[++L]=c;
         siz[L]=1;
-        r[L]=((1ll*rand()<<30)|rand());
+        r[L]=((1ll*rand()<<30)^rand());
         return L;
     }
     void split(int u, int c, int &x, int &y) {

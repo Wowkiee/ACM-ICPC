@@ -37,7 +37,7 @@ struct Treap {
         if(!u) {
             u=++L;
             w[u]=c;
-            r[u]=((1ll*rand()<<30)|(rand()));
+            r[u]=((1ll*rand()<<30)^(rand()));
             cnt[u]=siz[u]=1;
             po=u;
         } else if(w[u]==c) {
