@@ -1,18 +1,3 @@
-#include<bits/stdc++.h>
-using namespace std;
-#define fi first
-#define se second
-#define mp make_pair
-#define pb push_back
-#define rep(i, a, b) for(int i=(a); i<(b); i++)
-#define sz(x) (int)x.size()
-#define de(x) cout<< #x<<" = "<<x<<endl
-#define dd(x) cout<< #x<<" = "<<x<<" "
-typedef long long ll;
-typedef pair<int, int> pii;
-typedef vector<int> vi;
-//------
-
 const int N=101010;
 
 int n,m;
