@@ -1,6 +1,7 @@
 ## 注意
 
 不保证代码都是能过的。
+
 榜单地址：http://www.fjutacm.com/Contest.jsp?cid=430#R
 
 ## 回顾
