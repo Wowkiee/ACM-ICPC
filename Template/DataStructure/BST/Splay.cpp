@@ -4,12 +4,13 @@ struct Splay {
 	#define rs son[u][1]
 	static const int N=101010;
 	int rt, L;
-	int w[N], fa[N], son[N][2], cnt[N], siz[N];
+	int w[N], fa[N], son[N][2], cnt[N], siz[N], rev[N];
 	void init() {
 		fill_n(w, L+1, 0);
 		fill_n(fa, L+1, 0);
 		fill_n(cnt, L+1, 0);
 		fill_n(siz, L+1, 0);
+		fill_n(rev, L+1, 0);
 		fill_n(son[0], L+1, 0);
 		fill_n(son[1], L+1, 0);
 		L=rt=0;
@@ -19,6 +20,16 @@ struct Splay {
 		siz[u]=cnt[u];
 		if(ls) siz[u]+=siz[ls];
 		if(rs) siz[u]+=siz[rs]; 
+	}
+	void gao(int u) {
+		if(!u) return ;
+		rev[u]^=1;
+		swap(ls, rs);
+	}
+	void down(int u) {
+		if(!rev[u]) return ;
+		rev[u]=0;
+		gao(ls);gao(rs);
 	}
 	int id(int u) {
 		return son[fa[u]][1]==u;
@@ -140,37 +151,4 @@ struct Splay {
 			rt=0;
 		}
 	}
-}T;
-
-int main() {
-	T.init();
-	int n;scanf("%d",&n);
-	while(n--) {
-		int t, x;scanf("%d%d",&t,&x);
-		switch(t) {
-			case 1:
-				T.ins(x);
-				break;
-			case 2:
-				T.del(x);
-				break;
-			case 3:
-				printf("%d\n",T.rank(x));
-				break;
-			case 4:
-				printf("%d\n",T.mink(x));
-				break;
-			case 5:
-				T.ins(x);
-				printf("%d\n",T.w[T.Next(0)]);
-				T.del(x);
-				break;
-			case 6:
-				T.ins(x);
-				printf("%d\n",T.w[T.Next(1)]);
-				T.del(x);
-				break;
-		}
-	}
-	return 0;
-}
+};
