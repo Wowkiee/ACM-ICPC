@@ -123,37 +123,4 @@ struct PerTreap {
         now=merge(x, y);
         return w[u];
     }
-    void solve() {
-        init();
-        int n;scanf("%d",&n);
-        rep(i,1,n+1) {
-            int t,o,x;scanf("%d%d%d",&t,&o,&x);
-            rt[i]=rt[t];
-            switch(o) {
-                case 1:
-                    ins(rt[t], rt[i], x);
-                    break;
-                case 2:
-                    del(rt[t], rt[i], x);
-                    break;
-                case 3:
-                    printf("%d\n",rank(rt[i], x)); 
-                    break;
-                case 4:
-                    printf("%d\n",mink(rt[i], x));
-                    break;
-                case 5:
-                    printf("%d\n",Pre(rt[i], x));
-                    break;
-                case 6:
-                    printf("%d\n",Next(rt[i], x));
-                    break;
-            }
-        } 
-    }
 }T;
-
-int main() {
-    T.solve();
-    return 0;
-}

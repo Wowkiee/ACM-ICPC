@@ -1,8 +1,8 @@
-// Çå¿Õ£¡ 
+// æ¸…ç©ºï¼ 
 namespace Doubling{
     static const int N = 101010;
-	// sa[0~n]: ÅÅÃûµÚiµÄºó×ºÊÇÒÔ sa[i] ¿ªÍ·
-	// h[1~n]:S[sa[i-1]] Óë S[sa[i]] µÄ×î³¤¹«¹²Ç°×º³¤¶ÈÎª h[i]
+	// sa[0~n]: æ’åç¬¬içš„åç¼€æ˜¯ä»¥ sa[i] å¼€å¤´
+	// h[1~n]:S[sa[i-1]] ä¸ S[sa[i]] çš„æœ€é•¿å…¬å…±å‰ç¼€é•¿åº¦ä¸º h[i]
     int t[N] , wa[N] , wb[N] , sa[N] , h[N];
     void sort(int *x,int *y,int n,int m){
         rep(i,0,m) t[i] = 0;
@@ -32,7 +32,7 @@ namespace Doubling{
             for(k&&--k,j=sa[rk[i]-1];s[i+k]==s[j+k];++k);
     }
 }
-// rank[0~n-1]: ÒÔ i ¿ªÍ·µÄºó×ºÅÅÃû rank[i]
+// rank[0~n-1]: ä»¥ i å¼€å¤´çš„åç¼€æ’å rank[i]
 struct DA{ // [0,n] , in[n] = 0 , n load
     static const int N = 101010;
     int p[18][N] , rk[N] , in[N] , Log[N] , n;
@@ -47,7 +47,7 @@ struct DA{ // [0,n] , in[n] = 0 , n load
                 p[j][i] = min(p[j-1][i] , p[j-1][i+(1<<j>>1)]);
         }
     }
-    // Ä³Á½¸öºó×ºµÄ×î³¤¹«¹²Ç°×º  
+    // æŸä¸¤ä¸ªåç¼€çš„æœ€é•¿å…¬å…±å‰ç¼€  
     int lcp(int a,int b){
         a = rk[a] , b = rk[b];
         if(a > b) swap(a , b);++a;

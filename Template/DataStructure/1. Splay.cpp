@@ -3,8 +3,7 @@ struct Splay {
 	#define ls son[u][0]
 	#define rs son[u][1]
 	static const int N=101010;
-	int rt, L;
-	int w[N], fa[N], son[N][2], cnt[N], siz[N], rev[N];
+	int rt, L, w[N], fa[N], son[N][2], cnt[N], siz[N], rev[N];
 	void init() {
 		fill_n(w, L+1, 0);
 		fill_n(fa, L+1, 0);
@@ -23,13 +22,11 @@ struct Splay {
 	}
 	void gao(int u) {
 		if(!u) return ;
-		rev[u]^=1;
-		swap(ls, rs);
+		rev[u]^=1;swap(ls, rs);
 	}
 	void down(int u) {
 		if(!rev[u]) return ;
-		rev[u]=0;
-		gao(ls);gao(rs);
+		rev[u]=0;gao(ls);gao(rs);
 	}
 	int id(int u) {
 		return son[fa[u]][1]==u;

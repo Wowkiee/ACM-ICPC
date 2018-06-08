@@ -1,13 +1,8 @@
 const int N=101010;
-
-int n,m;
-int Max[N][22];
-
+int n,m,Max[N][22];
 int main() {
 	while(~scanf("%d%d",&n,&m)) {
-		///read
 		rep(i,1,n+1) scanf("%d",&Max[i][0]);
-		///solve
 		for(int i=1;(1<<i)<=n;++i) {
 			for(int j=1;j+(1<<i)-1<=n;++j) {
 				Max[j][i]=max(Max[j][i-1], Max[j+(1<<(i-1))][i-1]);

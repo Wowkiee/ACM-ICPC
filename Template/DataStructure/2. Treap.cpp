@@ -4,8 +4,7 @@ struct Treap {
     #define rs son[u][1]
     static const int N=101010;
     static const int inf=1e9+7;
-    int rt, L;
-    int son[N][2], w[N], cnt[N], siz[N];
+    int rt, L, son[N][2], w[N], cnt[N], siz[N];
     ll r[N];
     void init() {
         fill_n(son[0], L+1, 0);
@@ -113,33 +112,3 @@ struct Treap {
         return min(w[u], Next(ls, c));
     }
 }T;
-
-int main() {
-    T.init();
-    int n;scanf("%d",&n);
-    while(n--) {
-        int t, x;scanf("%d%d",&t,&x);
-        switch(t) {
-            case 1:
-                T.ins(T.rt, x);
-                break;
-            case 2:
-                T.del(T.rt, x);
-                break;
-            case 3:
-                printf("%d\n",T.rank(x)); 
-                break;
-            case 4:
-                printf("%d\n",T.mink(x)); 
-                break;
-            case 5:
-                printf("%d\n",T.Pre(T.rt, x)); 
-                break;
-            case 6:
-                printf("%d\n",T.Next(T.rt, x)); 
-                break;
-        }
-    }
-    return 0;
-}
-

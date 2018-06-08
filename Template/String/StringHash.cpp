@@ -1,6 +1,7 @@
+// id starts from 1
 const int mod=1e9+7;
 ull base[N],ha[N];
-char s[N];// s[1..len]
+char s[N];
 void init() {
 	base[0]=1;
 	rep(i,1,N) base[i]=base[i-1]*mod;

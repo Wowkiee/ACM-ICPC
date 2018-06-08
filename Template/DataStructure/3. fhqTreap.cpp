@@ -109,33 +109,3 @@ struct fhqTreap {
         return w[u];
     }
 }T;
-
-int main() {
-    T.init();
-    int n;scanf("%d",&n);
-    while(n--) {
-        int t, x;scanf("%d%d",&t,&x);
-        switch(t) {
-            case 1:
-                T.ins(x);
-                break;
-            case 2:
-                T.del(x);
-                break;
-            case 3:
-                printf("%d\n",T.rank(x));
-                break;
-            case 4:
-                printf("%d\n",T.mink(x));
-                break;
-            case 5:
-                printf("%d\n",T.Pre(x)); 
-                break;
-            case 6:
-                printf("%d\n",T.Next(x));
-                break;
-        }
-    }
-    return 0;
-}
-
