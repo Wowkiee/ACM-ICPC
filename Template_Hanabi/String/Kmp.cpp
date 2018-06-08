@@ -1,4 +1,4 @@
-/*nxt字串
+/*nxt 子串
   a  a  b  a  a  b
  -1  0 -1  0  1  2
  mth
@@ -13,7 +13,7 @@ void get_nxt(char *s, int len){
 		nxt[i]=(s[j+1]==s[i]?j+1:-1);
 	}
 }
-void KMP(char *s1, char *s2, int len1, int len2){//s1母串
+void KMP(char *s1, char *s2, int len1, int len2){//s1 母串
 	for(int i=0, j=-1; i<len1; i++){
 		while(j!=-1&&s1[i]!=s2[j+1])j=nxt[j];
 		if(s1[i]==s2[j+1])j++;

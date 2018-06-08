@@ -1,17 +1,14 @@
-/* 
- * sa[i]: æ’åç¬¬içš„æ˜¯å“ªä¸ªåç¼€
- * rk[i]: ç¬¬iä¸ªåç¼€çš„æ’å
- * p: å€å¢åçš„lcpæ•°ç»„, lcp[i]  sa[i]ä¸sa[i-1]çš„æœ€é•¿å‰ç¼€
- * ä½¿ç”¨æ–¹æ³•: [0, n],  'a' -> 1, in[n]=0, n load
-*/
+// Çå¿Õ£¡ 
 namespace Doubling{
     static const int N = 101010;
+	// sa[0~n]: ÅÅÃûµÚiµÄºó×ºÊÇÒÔ sa[i] ¿ªÍ·
+	// h[1~n]:S[sa[i-1]] Óë S[sa[i]] µÄ×î³¤¹«¹²Ç°×º³¤¶ÈÎª h[i]
     int t[N] , wa[N] , wb[N] , sa[N] , h[N];
     void sort(int *x,int *y,int n,int m){
         rep(i,0,m) t[i] = 0;
         rep(i,0,n) t[x[y[i]]]++;
         rep(i,1,m) t[i] += t[i-1];
-        for(int i=n-1; i>=0; i--)sa[--t[x[y[i]]]]=y[i];
+        per(i,0,n) sa[--t[x[y[i]]]] = y[i];
     }
     bool cmp(int *x,int a,int b,int d){
         return x[a] == x[b] && x[a+d] == x[b+d];
@@ -35,13 +32,14 @@ namespace Doubling{
             for(k&&--k,j=sa[rk[i]-1];s[i+k]==s[j+k];++k);
     }
 }
-struct DA{
+// rank[0~n-1]: ÒÔ i ¿ªÍ·µÄºó×ºÅÅÃû rank[i]
+struct DA{ // [0,n] , in[n] = 0 , n load
     static const int N = 101010;
     int p[18][N] , rk[N] , in[N] , Log[N] , n;
     void Build(){
         Doubling::da(in,n+1,300);
         Doubling::cal_h(in,n,rk);
-        Log[0] = -1;for(int i=1;i<=n;++i) Log[i] = Log[i>>1] + 1;
+        Log[0] = -1;for(int i=1;i<=n;++i) Log[i] = Log[i-1] + (i==(i&(-i)));
         for(int i=1;i<=n;++i) p[0][i] = Doubling::h[i];
         for(int j=1;1<<j<=n;++j){
             int lim = n+1-(1<<j);
@@ -49,6 +47,7 @@ struct DA{
                 p[j][i] = min(p[j-1][i] , p[j-1][i+(1<<j>>1)]);
         }
     }
+    // Ä³Á½¸öºó×ºµÄ×î³¤¹«¹²Ç°×º  
     int lcp(int a,int b){
         a = rk[a] , b = rk[b];
         if(a > b) swap(a , b);++a;

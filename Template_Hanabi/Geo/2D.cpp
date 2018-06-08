@@ -1,7 +1,7 @@
 /*
- *Å·À­¶¨Àí£º Æ½ÃæÍ¼Âú×ã V+F-E=2
- *Ö±ÏßµÄÒ»°ãÊ½£º Ax+By+C=0
- *µãµ½Ö±ÏßµÄ¾àÀë£º |Ax0+By0+C|/sqrt(A*A+B*B)
+ * æ¬§æ‹‰å®šç†ï¼š å¹³é¢å›¾æ»¡è¶³ V+F-E=2
+ * ç›´çº¿çš„ä¸€èˆ¬å¼ï¼š Ax+By+C=0
+ * ç‚¹åˆ°ç›´çº¿çš„è·ç¦»ï¼š |Ax0+By0+C|/sqrt(A*A+B*B)
 */
 #include<bits/stdc++.h>
 using namespace std;
@@ -18,7 +18,7 @@ typedef double db;
 const db eps = 1e-8;
 const db pi = acos(-1);
 
-//¸ºÊı -1 Áã  0 ÕıÊı  1
+// è´Ÿæ•° -1 é›¶  0 æ­£æ•°  1
 int sign(db x) {
     return (x > eps) - (x < -eps);
 }
@@ -76,47 +76,47 @@ db dot(P a, P b) {
 db cross(P a, P b) {
     return x(a) * y(b) - x(b) * y(a);
 }
-// Á½µã¾àÀëµÄÆ½·½
+// ä¸¤ç‚¹è·ç¦»çš„å¹³æ–¹
 db disq(P a, P b) {
     return norm(a - b);
 }
-// Á½µã¾àÀë
+// ä¸¤ç‚¹è·ç¦»
 db dis(P a, P b) {
     return sqrt(norm(a - b));
 }
-// ÏòÁ¿ ab Óë x ÖáµÄ¼Ğ½Ç£¬»¡¶È£¬È¡Öµ·¶Î§ (-pi, pi]
+// å‘é‡ ab ä¸ x è½´çš„å¤¹è§’ï¼Œå¼§åº¦ï¼Œå–å€¼èŒƒå›´ (-pi, pi]
 db ang(P a, P b) {
     return atan2(y(b)-y(a),x(b)-x(a));
 }
-// ÏòÁ¿ oaÓë obµÄ¼Ğ½Ç£¬»¡¶È£¬È¡Öµ·¶Î§ [0, pi]
+// å‘é‡ oa ä¸ ob çš„å¤¹è§’ï¼Œå¼§åº¦ï¼Œå–å€¼èŒƒå›´ [0, pi]
 db ang(P a, P o, P b) {
     return acos(dot(a - o, b - o) / abs(a - o) / abs(b - o));
 }
-// ÏòÁ¿ÄæÊ±ÕëĞı×ª rad£¨»¡¶È£©
+// å‘é‡é€†æ—¶é’ˆæ—‹è½¬ rad ï¼ˆå¼§åº¦ï¼‰
 P rot(P a, db rad) {
     return P(x(a) * cos(rad) - y(a) * sin(rad), x(a) * sin(rad) + y(a) * cos(rad));
 }
 P rot(P a, P o, db rad) {
     return rot(a - o, rad) + o;
 }
-// ÄæÊ±ÕëĞı×ª 90¶È
+// é€†æ—¶é’ˆæ—‹è½¬ 90 åº¦
 P rot90(P p) {
     return P(-y(p), x(p));
 }
-// ÏòÁ¿ pÔÚÏòÁ¿ v·½ÏòÉÏµÄÍ¶Ó°£¨µã£©
+// å‘é‡ p åœ¨å‘é‡ v æ–¹å‘ä¸Šçš„æŠ•å½±ï¼ˆç‚¹ï¼‰
 P proj(P p, P v) {
     return v * dot(p, v) / norm(v);
 }
-// ÏòÁ¿ apÔÚÏòÁ¿ ab·½ÏòÉÏµÄÍ¶Ó°£¨µã£©
+// å‘é‡ ap åœ¨å‘é‡ ab æ–¹å‘ä¸Šçš„æŠ•å½±ï¼ˆç‚¹ï¼‰
 P proj(P p, P a, P b) {
     return proj(p - a, b - a) + a;
 }
-// pµãÔÚ¹ØÓÚ abµÄ¶Ô³Æµã
+// p ç‚¹å…³äº ab çš„å¯¹ç§°ç‚¹
 P reflect(P p, P a, P b) {
     P o = proj(p, a, b);
     return o * 2 - p;
 }
-// Ö±Ïß pvºÍ qwµÄ½»µã
+// ç›´çº¿ pv å’Œ qw çš„äº¤ç‚¹
 P insLL(P p, P v, P q, P w) {
     P u = p - q;
     v = v - p;
@@ -124,25 +124,25 @@ P insLL(P p, P v, P q, P w) {
     db t = cross(w, u) / cross(v, w);
     return p + v * t;
 }
-// ÅĞ¶ÏµãÊÇ·ñÔÚÏß¶ÎÉÏ£¨²»°üÀ¨¶Ëµã£©
+// åˆ¤æ–­ç‚¹æ˜¯å¦åœ¨çº¿æ®µä¸Šï¼ˆä¸åŒ…æ‹¬ç«¯ç‚¹ï¼‰
 bool onS0(P p, P a, P b) {
     return sign(cross(p - a, b - a)) == 0 && sign(dot(p - a, p - b)) < 0;
 }
-// ÅĞ¶ÏµãÊÇ·ñÔÚÏß¶ÎÉÏ£¨°üÀ¨¶Ëµã£©
+// åˆ¤æ–­ç‚¹æ˜¯å¦åœ¨çº¿æ®µä¸Šï¼ˆåŒ…æ‹¬ç«¯ç‚¹ï¼‰
 bool onS1(P p, P a, P b) {
     return sign(cross(p - a, b - a)) == 0 && sign(dot(p - a, p - b)) <= 0;
 }
-// ÅĞ¶ÏÁ½Ö±ÏßÊÇ·ñÏà½»
+// åˆ¤æ–­ä¸¤ç›´çº¿æ˜¯å¦ç›¸äº¤
 bool isLL(P a1, P a2, P b1, P b2) {
 	return sign(cross(a2 - a1, b2 - b1)) != 0;
 }
-// ÅĞ¶ÏÏß¶ÎÊÇ·ñ¹æ·¶Ïà½»£¨½»µã²»ÔÚÈÎÒ»¸ö¶ËµãÉÏ£©
+// åˆ¤æ–­çº¿æ®µæ˜¯å¦è§„èŒƒç›¸äº¤ï¼ˆäº¤ç‚¹ä¸åœ¨ä»»ä¸€ä¸ªç«¯ç‚¹ä¸Šï¼‰
 bool isSS0(P a1, P a2, P b1, P b2) {
     db c1 = cross(a2 - a1, b1 - a1), c2 = cross(a2 - a1, b2 - a1),
        c3 = cross(b2 - b1, a1 - b1), c4 = cross(b2 - b1, a2 - b1);
     return sign(c1) * sign(c2) < 0 && sign(c3) * sign(c4) < 0;
 }
-// ÅĞ¶ÏÏß¶ÎÊÇ·ñ²»¹æ·¶Ïà½»
+// åˆ¤æ–­çº¿æ®µæ˜¯å¦ä¸è§„èŒƒç›¸äº¤
 bool isSS1(P a1, P a2, P b1, P b2) {
     db c1 = cross(a2 - a1, b1 - a1), c2 = cross(a2 - a1, b2 - a1),
        c3 = cross(b2 - b1, a1 - b1), c4 = cross(b2 - b1, a2 - b1);
@@ -152,35 +152,35 @@ bool isSS1(P a1, P a2, P b1, P b2) {
 		   sign(max(y(b1), y(b2)) - min(y(a1), y(a2))) >= 0 &&
 		   sign(c1) * sign(c2) <= 0 && sign(c3) * sign(c4) <= 0;
 }
-// ÅĞ¶ÏÖ±ÏßÏß¶ÎÊÇ·ñÏà½»£¨¶ËµãÒ²Ëã£©
+// åˆ¤æ–­ç›´çº¿çº¿æ®µæ˜¯å¦ç›¸äº¤ï¼ˆç«¯ç‚¹ä¹Ÿç®—ï¼‰
 bool isLS(P a1, P a2, P b1, P b2) {
     db c1 = cross(a2 - a1, b1 - a1), c2 = cross(a2 - a1, b2 - a1);
     return sign(c1) * sign(c2) <= 0;
 }
-// µãµ½Ö±Ïß¾àÀë
+// ç‚¹åˆ°ç›´çº¿è·ç¦»
 db distoL(P p, P a, P b) {
     return fabs(cross(b - a, p - a)) / abs(b - a);
 }
-// µãµ½Ïß¶Î¾àÀë
+// ç‚¹åˆ°çº¿æ®µè·ç¦»
 db distoS(P p, P a, P b) {
     if(sign(dot(b - a, p - a)) < 0) return abs(p - a);
     if(sign(dot(a - b, p - b)) < 0) return abs(p - b);
     return distoL(p, a, b);
 }
-// Ö±ÏßÁ½µãÊ½×ªÒ»°ãÊ½
-// Ö±ÏßµÄÒ»°ãÊ½£º Ax+By+C=0
+// ç›´çº¿ä¸¤ç‚¹å¼è½¬ä¸€èˆ¬å¼
+// ç›´çº¿çš„ä¸€èˆ¬å¼ï¼š Ax+By+C=0
 void getLABC(P a, P b, db &A, db &B, db &C) {
     A = y(a) - y(b);
 	B = x(b) - x(a);
 	C = x(a) * y(b) - y(a) * x(b);
 }
-// ¶à±ßĞÎÃæ»ı
+// å¤šè¾¹å½¢é¢ç§¯
 db areaP(P *p, int n) {
 	db ans = 0;p[n] = p[0];
 	rep(i, 0, n) ans += cross(p[i], p[i+1]);
 	return fabs(ans) / 2;
 }
-// ÅĞ¶ÏµãºÍ¶à±ßĞÎ¹ØÏµ ±ßÉÏ -1 Íâ 0 ÄÚ 1 
+// åˆ¤æ–­ç‚¹å’Œå¤šè¾¹å½¢å…³ç³» è¾¹ä¸Š -1 å¤– 0 å†… 1 
 int Pinploy(P o, P *p, int n) {
 	int res = 0;
 	rep(i, 0, n) {
@@ -194,10 +194,10 @@ int Pinploy(P o, P *p, int n) {
 	}
 	return res != 0;
 }
-// ÇóÍ¹°ü£º°Ñ¸ø¶¨µã°üÎ§ÔÚÄÚ²¿µÄ£¬Ãæ»ı×îĞ¡µÄÍ¹¶à±ßĞÎ
-// ¸´ÔÓ¶È£º O(n) ¼ÓÉÏÅÅĞò£º O(nlogn)
-// ÊäÈëµÄµãÒªÏÈÈ¥ÖØ
-// Èç¹û²»Ï£ÍûÔÚÍ¹°üµÄ±ßÉÏÓĞÊäÈëµã£¬°ÑÁ½¸ö <= ¸Ä³É <
+// æ±‚å‡¸åŒ…ï¼šæŠŠç»™å®šç‚¹åŒ…å›´åœ¨å†…éƒ¨çš„ï¼Œé¢ç§¯æœ€å°çš„å‡¸å¤šè¾¹å½¢
+// å¤æ‚åº¦ï¼š O(n) åŠ ä¸Šæ’åºï¼š O(nlogn)
+// è¾“å…¥çš„ç‚¹è¦å…ˆå»é‡
+// å¦‚æœä¸å¸Œæœ›åœ¨å‡¸åŒ…çš„è¾¹ä¸Šæœ‰è¾“å…¥ç‚¹ï¼ŒæŠŠä¸¤ä¸ª <= æ”¹æˆ <
 int convexhull(P *p, int n, P *ch) {
 	sort(p, p + n);
 	int m = 0;
@@ -219,12 +219,12 @@ struct C {
 	db r;
 	C() {}
 	C(P o, db r) : o(o), r(r) {}
-	// Í¨¹ıÔ²ĞÄ½Ç£¨»¡¶È£©ÇóÔ²ÉÏ×ø±ê
+	// é€šè¿‡åœ†å¿ƒè§’ï¼ˆå¼§åº¦ï¼‰æ±‚åœ†ä¸Šåæ ‡
 	P point(db rad) {
 		return P(o.x + cos(rad) * r, o.y + sin(rad) * r);
 	}
 };
-// ÅĞ¶Ï¡¢ÇóÏßÔ²½»µã
+// åˆ¤æ–­ã€æ±‚çº¿åœ†äº¤ç‚¹
 bool isLC(C c, P a, P b, P &p1, P &p2) {
 	db x = dot(a - c.o, b - a), y = norm(b - a),
 	   d = x * x - y * (norm(a - c.o) - c.r * c.r);
@@ -235,8 +235,8 @@ bool isLC(C c, P a, P b, P &p1, P &p2) {
 	p2 = q1 + q2;
 	return 1;
 }
-// ÅĞ¶ÏÁ½Ô²¹ØÏµ
-// ÏàµÈ 0 ÏàÀë 1 ÍâÇĞ 2 Ïà½» 3 ÄÚÇĞ 4 ÄÚº¬ 5
+// åˆ¤æ–­ä¸¤åœ†å…³ç³»
+// ç›¸ç­‰ 0 ç›¸ç¦» 1 å¤–åˆ‡ 2 ç›¸äº¤ 3 å†…åˆ‡ 4 å†…å« 5
 int relCC(C c1, C c2) {
 	P p1 = c1.o, p2 = c2.o;
 	db r1 = c1.r, r2 = c2.r;
@@ -250,8 +250,8 @@ int relCC(C c1, C c2) {
 	if(y > 0 && x < 0) return 3;
 	return -1;
 }
-// ·µ»ØÖµ±íÊ¾ÊÇ·ñÓĞ½»µã
-// ÇóÔ²Ô²½»µã
+// è¿”å›å€¼è¡¨ç¤ºæ˜¯å¦æœ‰äº¤ç‚¹
+// æ±‚åœ†åœ†äº¤ç‚¹
 bool isCC(C c1, C c2, P &p1, P &p2) {
 	db x = norm(c1.o - c2.o),
 	   y = ((c1.r * c1.r - c2.r * c2.r) / x + 1) / 2,
@@ -263,7 +263,7 @@ bool isCC(C c1, C c2, P &p1, P &p2) {
 	p2 = q1 + q2;
 	return 1;
 }
-// ÇóµãÔ²ÇĞµã
+// æ±‚ç‚¹åœ†åˆ‡ç‚¹
 vector<P> tanCP(P p, C c, P &p1, P &p2) {
 	db x = norm(p - c.o), d = x - c.r * c.r;
 	vector<P> ans;
@@ -275,7 +275,7 @@ vector<P> tanCP(P p, C c, P &p1, P &p2) {
 	ans.pb(p1);ans.pb(p2);
 	return ans;
 }
-// ÇóÔ²Ô²ÇĞÏß
+// æ±‚åœ†åœ†åˆ‡çº¿
 vector<pair<P, P> > tanCC(C c1, C c2) {
 	vector<pair<P, P> > ans;
 	if(!sign(c1.r - c2.r)) {
@@ -303,7 +303,7 @@ vector<pair<P, P> > tanCC(C c1, C c2) {
 	}
 	return ans;
 }
-// Ô²Ãæ»ı½»
+// åœ†é¢ç§¯äº¤
 db areaCC(C c1, C c2) {
 	db d = abs(c1.o - c2.o);
 	if(sign(c1.r + c2.r - d) <= 0) return 0;
@@ -316,9 +316,9 @@ db areaCC(C c1, C c2) {
 	db t2 = acos((d - x) / c2.r);
 	return c1.r * c1.r * t1 + c2.r * c2.r * t2 - d * c1.r * sin(t1);
 }
-// Ô²Èı½ÇĞÎÃæ»ı½»
-// Ô²£º°ë¾¶£º r Ô²ĞÄ£ºÔ­µã
-// Èı½ÇĞÎ£ºÔ²ĞÄ¡¢ p1¡¢ p2
+// åœ†ä¸‰è§’å½¢é¢ç§¯äº¤
+// åœ†ï¼šåŠå¾„ï¼š r åœ†å¿ƒï¼šåŸç‚¹
+// ä¸‰è§’å½¢ï¼šåœ†å¿ƒã€ p1 ã€ p2
 db areaCT(db r, P p1, P p2) {
 	P q1, q2, o = P(0, 0);
 	C c = C(o, r);
@@ -340,20 +340,20 @@ db areaCT(db r, P p1, P p2) {
 		return fabs(cross(p1, p2)) / 2;
 	}
 }
-// Èı½ÇĞÎÄÚĞÄ
+// ä¸‰è§’å½¢å†…å¿ƒ
 P inC(P A, P B, P C) {
 	db a = abs(B - C);
 	db b = abs(A - C);
 	db c = abs(A - B);
 	return (A * a + B * b + C * c) / (a + b + c);
 }
-// Èı½ÇĞÎÍâĞÄ
+// ä¸‰è§’å½¢å¤–å¿ƒ
 P outC(P A, P B, P C) {
 	P b = B - A, c = C - A;
 	db db = norm(b), dc = norm(c), d = 2 * cross(b, c);
 	return A - P(y(b) * dc - y(c) * db, x(c) * db - x(b) * dc) / d;
 }
-// Èı½ÇĞÎ´¹ĞÄ
+// ä¸‰è§’å½¢å‚å¿ƒ
 P othroC(P A, P B, P C) {
 	P ba = B - A, ca = C - A, bc = B - C;
 	db Y = y(ba) * y(ca) * y(bc);
@@ -362,7 +362,7 @@ P othroC(P A, P B, P C) {
 	db yy = -x(ba) * (xx - x(C)) / y(ba) + y(ca);
 	return P(xx, yy);
 }
-// ×îĞ¡Ô²¸²¸Ç  O(n)
+// æœ€å°åœ†è¦†ç›–  O(n)
 void Mincir(P *p, int n){
 	random_shuffle(p, p+n);
 	P cir = p[0]; db r= 0;
@@ -382,7 +382,7 @@ void Mincir(P *p, int n){
 	}
 	printf("%.2f %.2f %.2f\n", x(cir), y(cir), r);
 }
-// °ëÆ½Ãæ½» Î´²âÊÔ 
+// åŠå¹³é¢äº¤ æœªæµ‹è¯• 
 const int N=450005;
 struct Seg{
 	P s, e;
@@ -421,7 +421,7 @@ int hpi(P *p){
 	if(r>h+1)p[m++]=insLL(Q[h], Q[r]);
 	return m;
 }
-// Ô²Ãæ»ı½» k
+// åœ†é¢ç§¯äº¤ k
 struct Event{
 	P p;
 	db ang;
@@ -470,24 +470,4 @@ void solve(C *c, int n, db *ans){
 			}
 		}
 	}
-}
-int n;
-const int MAXN=101010;
-P p[MAXN], p2[MAXN];
-int main() {
-	int T;
-	scanf("%d", &T);
-	while(T--){
-		scanf("%d", &n);
-		rep(i, 0, n){
-			scanf("%lf%lf", &p[i].x, &p[i].y);
-		}
-		rep(i, 0, n-1){
-			add_seg(p[i].x, p[i].y, p[i+1].x, p[i+1].y);
-		}
-		add_seg(p[n-1].x, p[n-1].y, p[0].x, p[0].y);
-		int n2=hpi(p2); 
-		printf("%.2f\n", areaP(p2, n2)); 
-	}
-    return 0;
 }

@@ -46,7 +46,7 @@ int build(int l,int r,int k) {
 
 ll sqr(ll x) {return x*x;}
 
-ll get(node v,int x) {//估价函数
+ll get(node v,int x) {// 估价函数
 	if (!x) return 0;
 	ll res=0;
 	rep(i,0,2) {

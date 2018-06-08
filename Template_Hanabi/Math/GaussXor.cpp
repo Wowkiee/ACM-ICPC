@@ -1,7 +1,7 @@
 //对 2 取模的 01 方程组
 namespace Gause{
 	static const int N=310;
-	//有 equ 个方程， var 个变元。增广矩阵行数为 equ ,列数为 [0..var]
+	//有 equ 个方程， var 个变元。增广矩阵行数为 equ , 列数为 [0..var]
 	int equ,var;
 	bitset<N> a[N]; //增广矩阵 modif
 	int x[N]; //解集

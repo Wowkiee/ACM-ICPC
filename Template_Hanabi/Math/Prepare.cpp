@@ -8,7 +8,7 @@ rep(i,2,N){
     int t = mod/i , k = (ll)v[mod-t*i] * t % mod;
     v[i] = (ll)i * k % mod * k % mod;
 }
-// O(n)(任意数逆元)
+// O(n)( 任意数逆元 )
 int pri[N] , _p , vis[N];
 v[1] = Pow(1,mod-2);
 rep(i,2,N) v[i] = 1;

@@ -1,6 +1,6 @@
 /*
-	输入保证左边点数<=右边点数
-*/
+ * 输入保证左边点数 <= 右边点数
+ */
 // init!! , id starts from 0
 template<class T>
 struct KM {

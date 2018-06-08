@@ -1,8 +1,9 @@
 /* 
- * sa[i]: 排名第i的是哪个后缀
- * rk[i]: 第i个后缀的排名
- * p: 倍增后的lcp数组, lcp[i]  sa[i]与sa[i-1]的最长前缀
- * 使用方法: [0, n],  'a' -> 1, in[n]=0, n load
+ * sa[i] : 排名第 i 的是哪个后缀
+ * rk[i] : 第 i 个后缀的排名
+ * p : 倍增后的 lcp 数组
+ * lcp[i] ： sa[i] 与 sa[i-1] 的最长前缀
+ * 使用方法: [0, n] , 'a' -> 1 , in[n]=0 , n load
 */
 namespace Doubling{
     static const int N = 101010;
