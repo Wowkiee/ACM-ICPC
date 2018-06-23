@@ -44,7 +44,6 @@ struct Seg {
 }seg;
 struct Fenwick {
 #define lb(x) ((x)&(-x))
-	static const int N = ::N;
 	void init() {
 		fill_n(rt+1+n, n, 0);
 	}
