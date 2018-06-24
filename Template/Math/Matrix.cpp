@@ -1,17 +1,19 @@
-const int N=3;
-const int mod=1e9+7;
 struct Mat {
-    ll r[N][N];
-    Mat() {memset(r,0,sizeof(r));}
-    Mat operator * (Mat b) {
-        Mat c;
-        rep(i,0,N) rep(j,0,N) rep(k,0,N) c.r[i][j]=(c.r[i][j]+r[i][k]*b.r[k][j])%mod;
-        return c;
-    }
+	static const int N = ::N;
+	int a[N][N], n;
+	Mat(){} Mat(int _n, int v) { n = _n; rep(i, 0, n) rep(j, 0, n) a[i][j] = i==j ? v : 0; }
+	Mat operator * (const Mat &c) const {
+		Mat res(n, 0);
+		rep(i, 0, n) rep(j, 0, n) rep(k, 0, n) res.a[i][j] = add(res.a[i][j], mul(a[i][k], c.a[k][j]));
+		return res;
+	}
+	Mat operator ^ (int b) const {
+		Mat res(n, 1), a = *this;
+		while(b) {
+			if(b&1) res = res*a;
+			a = a*a;
+			b >>= 1;
+		}
+		return res;
+	}
 };
-Mat kpow(Mat a,ll k) {
-    Mat b;
-    rep(i,0,N) b.r[i][i]=1;
-    for(;k;k>>=1,a=a*a) if(k&1) b=b*a;
-    return b;
-}
