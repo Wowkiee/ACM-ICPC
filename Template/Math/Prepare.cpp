@@ -2,8 +2,8 @@
 没有交换律， 有结合律。
 左乘向量取行， 右乘取列。 
 
-// inv O(n)
-// P%i != 0 !!
+// desc: inv O(n)
+// !!!!: P%i != 0 
 inv[1] = 1;
 rep(i, 2, N) inv[i] = mul(inv[P%i], P - P/i);
 
