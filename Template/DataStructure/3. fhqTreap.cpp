@@ -28,6 +28,7 @@ struct fhqTreap {
         r[L]=((1ll*rand()<<30)^rand());
         return L;
     }
+    // c
     void split(int u, int c, int &x, int &y) {
         if(!u) {
             x=y=0;
@@ -42,6 +43,21 @@ struct fhqTreap {
             up(u);
         }
     }
+    // k
+	void split(int u, int k, int &x, int &y) {
+		if(!u) {
+			x = y = 0;
+		} else {
+			if(siz[ls] < k) {
+				x = u;
+				split(rs, k - siz[ls] - 1, rs, y);
+			} else {
+				y = u;
+				split(ls, k, x, ls);
+			}
+			up(u);
+		}
+	}
     int merge(int x,int y) {
         if(x&&y) {
             if(r[x]<r[y]) {
