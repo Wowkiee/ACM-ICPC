@@ -12,7 +12,7 @@ rep(i, 2, N) inv[i] = mul(inv[P%i], P - P/i);
 
 // p O(n)
 vi p;
-int vis[N];
+bool vis[N];
 for(int i = 2; i < N; ++i) {
     if(!vis[i]) p.pb(i);
     for(int j = 0; j < sz(p) && i * p[j] < N; ++j) {
