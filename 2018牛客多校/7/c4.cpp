@@ -1,0 +1,74 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+#define fi first
+#define se second
+#define mp make_pair
+#define pb push_back
+#define rep(i, a, b) for(int i=(a); i<(b); i++)
+#define sz(a) (int)a.size()
+#define de(a) cout << #a << " = " << a << endl
+#define dd(a) cout << #a << " = " << a << " "
+#define all(a) a.begin(), a.end()
+#define endl "\n"
+typedef long long ll;
+typedef unsigned long long ull;
+typedef pair<int, int> pii;
+typedef vector<int> vi;
+//---
+
+const int N=(1<<18)+7;
+const int mod1=1e9+7;
+const int mod2=1e9+9;
+
+unordered_map<ull,int> M;
+int n,m;
+string s;
+bool a[20][N];
+
+unsigned int get1(int dep) {
+	unsigned int res=0;int s=1<<dep;
+	if (dep==n) return 0;
+	rep(i,0,s) res=(res<<2)+a[dep][i]+1;
+	return res;
+}
+
+unsigned int get2(int dep) {
+	//unsigned int 
+	ull res=0;int s=1<<dep;
+	if (dep==n) return 0;
+	rep(i,0,s) res=(res*7)+a[dep][i]+5;//res%=mod2;
+	res%=mod2;
+	return res;
+}
+
+int dfs(int dep) {
+	if (dep==0) return a[0][0];
+	unsigned int h1=get1(dep),h2=get2(dep);
+	//de(h1);de(h2);
+	ull h=((1ull*h1)<<32)^h2;
+	//de(h);
+	if (M.count(h)) return M[h];
+	int s=1<<(dep-1),res=0;
+	for(register int i=0,j=0;j<s;i+=2,j++) a[dep-1][j]=a[dep][i]&a[dep][i+1];
+	res+=dfs(dep-1);
+	for(register int i=0,j=0;j<s;i+=2,j++) a[dep-1][j]=a[dep][i]|a[dep][i+1];
+	res+=dfs(dep-1);
+	for(register int i=0,j=0;j<s;i+=2,j++) a[dep-1][j]=a[dep][i]^a[dep][i+1];
+	res+=dfs(dep-1);
+	M[h]=res;
+	return res;
+}
+
+int main() {
+	std::ios::sync_with_stdio(false);
+	std::cin.tie(0);
+	cin>>n>>s;
+	//srand(time(0));
+	n=18;
+	m=1<<n;
+	//rep(i,0,m) a[n][i]=s[i]-'0'; 
+	rep(i,0,m) a[n][i]=rand()%2;
+	cout<<dfs(n);
+	return 0;
+}
