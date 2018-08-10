@@ -1,4 +1,3 @@
-// 清空！ 
 namespace Doubling{
     static const int N = 101010;
 	// sa[0~n]: 排名第i的后缀是以 sa[i] 开头
