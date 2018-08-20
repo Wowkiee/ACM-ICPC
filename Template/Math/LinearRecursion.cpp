@@ -1,5 +1,5 @@
 // a_{m} = \sum_{j=0}^{m−1}a_{j}*c_{j} O(m^2lgn)
-int linear_recurrence(ll n, int m, int a[], vi c) {
+int linear_recurrence(ll n, int m, vi a, vi c) {
 	vector<ll> v(m, 0), u(m<<1, 0);
 	v[0] = 1;
 	for(ll x = 0, W = n ? 1ll<<(63 - __builtin_clzll(n)) : 0; W; W >>= 1, x <<= 1) {
