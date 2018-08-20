@@ -8,22 +8,18 @@
 // 无向图生成树个数： a[][] 任何一个 n-1 阶主子式的绝对值
 // 有向图以 i 为根的生成树个数： a[][] 去掉第 i 行第 i 列的行列式的绝对值
 
-// 如果有模数，注释 mod 的地方可以直接取模
-ll det() { // det(a[1..n-1][1..n-1])
-	ll ans=1;
-	rep(i,1,n) {
-		rep(j,i+1,n) {
-			while(a[j][i]) {
-				ll t=a[i][i]/a[j][i];
-				rep(k,i,n) a[i][k]=a[i][k]-a[j][k]*t;// mod
-				rep(k,i,n) swap(a[i][k],a[j][k]);
-				ans=-ans;// mod
-			}
+int det(int n) { // det(a[1..n-1][1..n-1])
+	int ans=1;
+	rep(i, 1, n) {
+		rep(j, i+1, n) while(a[j][i]) {
+			int t = a[i][i] / a[j][i];
+			rep(k, i, n) a[i][k] = sub(a[i][k], mul(a[j][k], t)); 
+			rep(k, i, n) swap(a[i][k], a[j][k]);
+			ans = P - ans;
 		}
-		if(a[i][i]==0) return 0;
-		ans=ans*a[i][i];// mod
+		if(a[i][i] == 0) return 0;
+		ans = mul(ans, a[i][i]);
 	}
-	if(ans<0) ans=-ans;// mod
 	return ans;
 }
 
