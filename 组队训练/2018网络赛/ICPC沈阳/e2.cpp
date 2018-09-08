@@ -17,7 +17,7 @@ using namespace std;
 typedef long long ll;
 typedef pair<int, int> pii;
 typedef vector<int> vi;
-typedef double db;
+typedef long double db;
 //---
 
 const int N = 333;
@@ -28,38 +28,50 @@ int sign(db x) {
 }
 
 struct P {
-    db x,y;
-    P() {}
-    P(db x, db y) {
-        this->x = x;
-        this->y = y;
-    }
-    P operator + (const P &c) const {
-        return P(x + c.x, y + c.y);
-    }
-    P operator - (const P &c) const {
-        return P(x - c.x, y - c.y);
-    }
-    bool operator == (const P &c) const {
-    	return !sign(x - c.x) && !sign(y - c.y);
-		}
+	db x,y;
+	P() {}
+	P(db x, db y) {
+		this->x = x;
+		this->y = y;
+	}
+	P operator + (const P &c) const {
+		return P(x + c.x, y + c.y);
+	}
+	P operator - (const P &c) const {
+		return P(x - c.x, y - c.y);
+	}
+	P operator * (const db &c) const {
+		return P(x * c, y * c);
+	}
+	P operator / (const db &c) const {
+		return P(x / c, y / c);
+	}
+	bool operator == (const P &c) const {
+		return !sign(x - c.x) && !sign(y - c.y);
+	}
+	bool operator != (const P &c) const {
+		return !(*this == c);
+	}
+	void print() {
+		cout << x << " " << y << endl << endl;
+	}
 };
 
 int n, s, r;
-P p[N];
 db ans;
+P p[N];
 
 db abs(P a) {
-    return sqrt(x(a) * x(a) + y(a) * y(a));
+	return sqrt(x(a) * x(a) + y(a) * y(a));
 }
 db norm(P a) {
-    return x(a) * x(a) + y(a) * y(a);
+	return x(a) * x(a) + y(a) * y(a);
 }
 db dot(P a, P b) {
-    return x(a) * x(b) + y(a) * y(b);
+	return x(a) * x(b) + y(a) * y(b);
 }
 db cross(P a, P b) {
-    return x(a) * y(b) - x(b) * y(a);
+	return x(a) * y(b) - x(b) * y(a);
 }
 db cross(P a, P b, P o) {
 	a = a - o, b = b - o;
@@ -67,12 +79,9 @@ db cross(P a, P b, P o) {
 }
 
 P othroC(P A, P B, P C) {
-	P ba = B - A, ca = C - A, bc = B - C;
-	db Y = y(ba) * y(ca) * y(bc);
-	db a = cross(ca, ba);
-	db xx = (Y + x(ca) * y(ba) * x(B) - x(ba) * y(ca) * x(C)) / a;
-	db yy = -x(ba) * (xx - x(C)) / y(ba) + y(ca);
-	return P(xx, yy);
+	P b = B - A, c = C - A;
+	db db = norm(b), dc = norm(c), d = 2 * cross(b, c);
+	return A - P(y(b) * dc - y(c) * db, x(c) * db - x(b) * dc) / d;
 }
 
 db solve(int u, int v) {
@@ -82,13 +91,15 @@ db solve(int u, int v) {
 	int cnt = s - 2;
 	vector<db> V[2];
 	for(int i = 0; i < n && cnt > 0; ++i) if(i != u && i != v) {
-		P x = othroC(p[u], p[v], p[i]);
-		int t = sign(cross(x - p[v], p[u] - p[v]));
-		if(t) {
+		if(sign(cross(p[u], p[v], p[i]))) {
+			P x = othroC(p[u], p[v], p[i]);
 			db r = abs(p[i] - x);
-			V[t > 0].pb(r);
+			db t = sign(cross(x - p[v], p[u] - p[v]));
+			if(t > 0) V[0].pb(r);
+			else if(t < 0) V[1].pb(r);
+			else --cnt;
 		} else {
-			if(p[u] == p[i] || p[v] == p[i] || sign(abs(p[v]) - abs(p[i])) == sign(abs(p[i]) - abs(p[u]))) --cnt;
+			if(p[u] == p[i] || p[v] == p[i] || (abs(p[i] - p[u]) < abs(p[v] - p[u]) && abs(p[i] - p[v]) < abs(p[u] - p[v]))) --cnt;
 		}
 	}
 	if(cnt <= 0) return res;
@@ -101,7 +112,7 @@ db solve(int u, int v) {
 		nth_element(V[1].begin(), V[1].begin() + cnt - 1, V[1].end());
 		mi = min(mi, V[1][cnt-1]);
 	}
-	return res + mi;
+	return max(res, mi);
 }
 
 int main() {
@@ -110,24 +121,33 @@ int main() {
 	int T;
 	cin >> T;
 	while(T--) {
+		map<pii, int> vis;
 		cin >> n >> s;
-		rep(i, 0, n) cin >> p[i].x >> p[i].y;
+		int ma = 0;
+		rep(i, 0, n) {
+			int x, y;
+			cin >> x >> y;
+			++vis[mp(x, y)];
+			ma = max(ma, vis[mp(x, y)]);
+			p[i] = P(x, y);
+		}
 		cin >> r;
 		if(n < s) {
 			cout << "The cake is a lie." << endl;
 			continue;
 		}
 		ans = 1e18;
-		if(s == 1) {
+		if(s <= ma) {
 			ans = 0;
 		} else {
-			rep(i, 0, n) rep(j, i + 1, n) {
+			rep(i, 0, n) rep(j, i + 1, n) if(p[i] != p[j]) {
 				ans = min(ans, solve(i, j));
 			}
 		}
 		cout << setiosflags(ios::fixed);
-		cout << setprecision(5);
-		cout << ans + r << endl;
+		cout << setprecision(4);
+		double res = ans + r;
+		cout << res << endl;
 	}
 	return 0;
 }
