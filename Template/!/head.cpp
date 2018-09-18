@@ -15,11 +15,7 @@ using namespace std;
 typedef long long ll;
 typedef pair<int, int> pii;
 typedef vector<int> vi;
-const int P = 1e9 + 7;
-int add(int a, int b) {if((a += b) >= P) a -= P; return a;}
-int sub(int a, int b) {if((a -= b) < P) a += P; return a;}
-int mul(int a, int b) {return 1ll * a * b % P;}
-int kpow(int a, int b) {int r=1;for(;b;b>>=1,a=mul(a,a)) {if(b&1)r=mul(r,a);}return r;}
+
 int main() {
 	std::ios::sync_with_stdio(false);
 	std::cin.tie(0);
