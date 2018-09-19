@@ -4,17 +4,15 @@
 
 yy的模板 + Polya.doc
 
-CheatSheet
-
 fb的模板 + hanabi的模板
 
 xf的模板 + andWho的模板 + mcginn的模板
 
 ## 大佬的模板
 
-fzu集训队资料
+CheatSheet
 
-kuangbinACM模板
+fzu集训队资料
 
 2018-fzu-final-template
 
