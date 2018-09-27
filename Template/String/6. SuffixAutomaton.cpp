@@ -1,6 +1,7 @@
 /*
  * [0,L] , 0 is virtual , 1 is rt , init!!
  * 
+ * parent 树和 trans 都是 DAG 。 
  * 一个状态 s ，由所有 right 集合是 right(s) 的字符串组成。
  * 这些字符串的长度范围是： [l[par[s]] + 1, l[s]] 。 
  * 状态的 right 集合是它 parent 树中所有孩子 right 集合的并集。 
