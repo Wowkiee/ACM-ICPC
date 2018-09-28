@@ -21,7 +21,7 @@ struct HeavyChain{
 		if(s) top[s] = top[c], dfs2(s, c, g);
 		for(auto t : g[c]) if(t != fa && t != s) dfs2(t, c, g);
 	}
-	void Query(int a, int b){// info in points
+	void Query(int a, int b){
 		int fa = top[a], fb = top[b];
 		while(fa != fb){
 			if(dep[fa] < dep[fb]) swap(a, b), swap(fa, fb);
@@ -30,6 +30,7 @@ struct HeavyChain{
 		}
 		if(dep[a] < dep[b]) swap(a, b);
 		// Cal id[b] .. id[a]
+		// b is lca
 	}
 	void Build(vi g[]){
 		dfs(1, 0, g);
