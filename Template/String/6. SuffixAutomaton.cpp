@@ -12,7 +12,14 @@ struct SAM {
     int par[N], l[N], ne[N][M];
     int rt, last, L;
     void add(int c) {
-        int p = last, np = ++L;
+        int p = last;
+        /* 广义后缀自动机 
+		if(ne[p][c] && l[ne[p][c]] == l[p] + 1) {
+			last = ne[p][c];
+			return ;
+		}
+		*/
+		int np = ++L;
         fill(ne[np], ne[np] + M, 0);
         l[np] = l[p] + 1;
         last = np;
