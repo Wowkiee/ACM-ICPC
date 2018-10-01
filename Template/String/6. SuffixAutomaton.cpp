@@ -8,7 +8,7 @@
  * l[par[s]] < l[s] 
  */ 
 struct SAM {
-    static const int N = 101010, M = 26;
+    static const int N = ::N << 1, M = 26;
     int par[N], l[N], ne[N][M];
     int rt, last, L;
     void add(int c) {
