@@ -1,10 +1,10 @@
 /*
  * [0,L] , 0 is virtual , 1 is rt , init!!
  * 
- * parent Ê÷ºÍ trans ¶¼ÊÇ DAG ¡£ 
- * Ò»¸ö×´Ì¬ s £¬ÓÉËùÓĞ right ¼¯ºÏÊÇ right(s) µÄ×Ö·û´®×é³É¡£
- * ÕâĞ©×Ö·û´®µÄ³¤¶È·¶Î§ÊÇ£º [l[par[s]] + 1, l[s]] ¡£ 
- * ×´Ì¬µÄ right ¼¯ºÏÊÇËü parent Ê÷ÖĞËùÓĞº¢×Ó right ¼¯ºÏµÄ²¢¼¯¡£ 
+ * parent æ ‘å’Œ trans éƒ½æ˜¯ DAG ã€‚ 
+ * ä¸€ä¸ªçŠ¶æ€ s ï¼Œç”±æ‰€æœ‰ right é›†åˆæ˜¯ right(s) çš„å­—ç¬¦ä¸²ç»„æˆã€‚
+ * è¿™äº›å­—ç¬¦ä¸²çš„é•¿åº¦èŒƒå›´æ˜¯ï¼š [l[par[s]] + 1, l[s]] ã€‚ 
+ * çŠ¶æ€çš„ right é›†åˆæ˜¯å®ƒ parent æ ‘ä¸­æ‰€æœ‰å­©å­ right é›†åˆçš„å¹¶é›†ã€‚ 
  * l[par[s]] < l[s] 
  */ 
 struct SAM {
@@ -13,7 +13,7 @@ struct SAM {
     int rt, last, L;
     void add(int c) {
         int p = last;
-        /* ¹ãÒåºó×º×Ô¶¯»ú 
+        /* å¹¿ä¹‰åç¼€è‡ªåŠ¨æœº 
 		if(ne[p][c] && l[ne[p][c]] == l[p] + 1) {
 			last = ne[p][c];
 			return ;
