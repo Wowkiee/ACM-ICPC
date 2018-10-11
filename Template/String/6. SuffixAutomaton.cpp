@@ -43,4 +43,23 @@ struct SAM {
         fill(ne[rt], ne[rt] + M, 0);
         l[0] = -1;
     }
+	// 一开始拿 s 建的自动机，这部分仅用于参考，不是板子的一部分。
+	string s;
+	int right[N], cc[N], cur[N];
+	void build() {
+		fill_n(right, L + 1, 0);
+		fill_n(cc, L + 1, 0);
+		int p = rt;
+		for(auto u : s) {
+			p = ne[p][u - 'a'];
+			++right[p];
+		}
+		rep(i, 1, L + 1) ++cc[l[i]];
+		rep(i, 1, L + 1) cc[i] += cc[i - 1];
+		rep(i, 1, L + 1) cur[--cc[l[i]]] = i;
+		for(int i = L; i >= 2; --i) {
+			int u = cur[i];
+			right[par[u]] += right[u];
+		}
+	}
 };
