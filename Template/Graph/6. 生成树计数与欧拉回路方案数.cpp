@@ -1,6 +1,6 @@
 // d[][]:
 //     i!=j d[i][j]=0
-//     i==j d[i][j]=out_deg(i) 
+//     i==j d[i][j]=in_deg(i) 
 // b[][]:
 //     from i to j has b[i][j] directed edges
 // a[][] = d[][] - b[][]
@@ -13,8 +13,7 @@ int det(int n) { // det(a[1..n-1][1..n-1])
 	rep(i, 1, n) {
 		rep(j, i+1, n) while(a[j][i]) {
 			int t = a[i][i] / a[j][i];
-			rep(k, i, n) a[i][k] = sub(a[i][k], mul(a[j][k], t)); 
-			rep(k, i, n) swap(a[i][k], a[j][k]);
+			rep(k, i, n) a[i][k] = sub(a[i][k], mul(a[j][k], t)), swap(a[i][k], a[j][k]);
 			ans = P - ans;
 		}
 		if(a[i][i] == 0) return 0;
