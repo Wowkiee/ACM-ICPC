@@ -1,32 +1,45 @@
-/// init!!
 struct Splay {
 	#define ls son[u][0]
 	#define rs son[u][1]
-	static const int N=101010;
-	int rt, L, w[N], fa[N], son[N][2], cnt[N], siz[N], rev[N];
+	static const int N = ::N;
+	int rt, L, w[N], fa[N], son[N][2], cnt[N], siz[N];
+	bool rev[N];
 	void init() {
 		fill_n(w, L+1, 0);
 		fill_n(fa, L+1, 0);
+		fill_n(son[0], L+1, 0);
+		fill_n(son[1], L+1, 0);
 		fill_n(cnt, L+1, 0);
 		fill_n(siz, L+1, 0);
 		fill_n(rev, L+1, 0);
-		fill_n(son[0], L+1, 0);
-		fill_n(son[1], L+1, 0);
 		L=rt=0;
 	}
 	void up(int u) {
 		if(!u) return ;
-		siz[u]=cnt[u];
-		if(ls) siz[u]+=siz[ls];
-		if(rs) siz[u]+=siz[rs]; 
+		siz[u] = cnt[u];
+		if(ls) siz[u] += siz[ls];
+		if(rs) siz[u] += siz[rs]; 
+	}
+	int build(int l, int r, int pre) {
+		if(l > r) return 0;
+		int mid = l + r >> 1, u = ++L;
+		w[u] = ::w[mid];
+		fa[u] = pre;
+		cnt[u] = 1;
+		ls = build(l, mid - 1, u);
+		rs = build(mid + 1, r, u);
+		up(u);
+		return u;
 	}
 	void gao(int u) {
 		if(!u) return ;
-		rev[u]^=1;swap(ls, rs);
+		rev[u] ^= 1;
+		swap(ls, rs);
 	}
 	void down(int u) {
 		if(!rev[u]) return ;
-		rev[u]=0;gao(ls);gao(rs);
+		gao(ls), gao(rs);
+		rev[u] = 0;
 	}
 	int id(int u) {
 		return son[fa[u]][1]==u;
@@ -42,7 +55,7 @@ struct Splay {
 		fa[y]=x;
 		up(y); up(x);
 	}	
-	void splay(int x, int g=0) {
+	void splay(int x, int g = 0) {
 		while(fa[x]!=g) {
 			int y=fa[x], z=fa[y];
 			if(z!=g) (id(x)^id(y))?rot(x):rot(y);
