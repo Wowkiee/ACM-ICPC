@@ -1,3 +1,4 @@
+// O(n ^ 2)
 void maxAreaTri(P *p, int n, P &a, P &b, P &c) {
 	int i = 0, j = 1, k = 2;
 	a = p[i], b = p[j], c = p[k];
