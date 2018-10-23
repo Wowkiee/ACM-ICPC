@@ -19,5 +19,7 @@ typedef vector<int> vi;
 int main() {
 	std::ios::sync_with_stdio(false);
 	std::cin.tie(0);
+	cout << setiosflags(ios::fixed);
+	cout << setprecision(3);
 	return 0;
 }

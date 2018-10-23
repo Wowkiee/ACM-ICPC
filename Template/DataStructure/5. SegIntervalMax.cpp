@@ -1,4 +1,5 @@
 // O(nlogn)
+// 区间取 max, 区间求和 
 struct Seg {
 #define ls rt << 1
 #define rs ls | 1
