@@ -10,8 +10,12 @@ namespace Centriod {
     }
     void dfs(int c){
         int rt=0;dfssz(c,0,0,rt);dfssz(c,0,sz[c],rt=0);
-        // cal something
         vis[rt] = true;
+        /*
+         * calc
+         * 注意计算以 rt 为起点的路径、只包含 rt 的路径
+		 * 注意 v != vis[rt] 
+		 */
         for(auto t : g[rt]) if(!vis[t]) dfs(t);
     }
 };
