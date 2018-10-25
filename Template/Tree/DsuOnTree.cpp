@@ -1,6 +1,6 @@
 // id starts with 1
 namespace QuerySubtree{
-    static const int N = 100005 , inf = ~0U>>1;
+    static const int N = ::N;
     int sz[N] , wson[N] , par[N];
     void dfs(int c,int fa,vi g[]){
         sz[c]=1;par[c]=fa;int &s=wson[c]=0;

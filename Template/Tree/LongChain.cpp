@@ -1,5 +1,5 @@
 struct LongChain{
-	static const int N = 100005 , inf = ~0U>>1;
+	static const int N = ::N;
 	int wson[N] , top[N] , dep[N] , lg[N];
 	int jump[N][20] , id[N] , who[N] , rwho[N] , _;
 	void dfs(int c,int fa,vi g[]){

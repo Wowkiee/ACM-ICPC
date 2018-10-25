@@ -1,6 +1,6 @@
 // id starts from 1
 namespace Centriod {
-    const int N = 101010;
+    const int N = ::N;
     bool vis[N];
 	int sz[N];
     void dfssz(int c,int fa,int Sz,int &rt){

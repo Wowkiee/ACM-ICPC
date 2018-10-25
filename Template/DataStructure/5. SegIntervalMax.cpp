@@ -1,5 +1,5 @@
 // O(nlogn)
-// Çø¼äÈ¡ max, Çø¼äÇóºÍ 
+// åŒºé—´å– max, åŒºé—´æ±‚å’Œ 
 struct Seg {
 #define ls rt << 1
 #define rs ls | 1

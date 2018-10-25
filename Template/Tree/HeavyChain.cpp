@@ -1,6 +1,6 @@
 // id starts with 1
 struct HeavyChain{
-	static const int N = 100005, inf = ~0U>>1;
+	static const int N = ::N;
 	int sz[N], wson[N], top[N], dep[N], id[N], _, par[N], who[N];
 	void dfs(int c, int fa, vi g[]){
 		sz[c] = 1;
