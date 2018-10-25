@@ -29,6 +29,7 @@ struct LongChain{
 		for(auto t : g[c]) if(t != fa && t != wson[c]) {
 			// brute force upd c by t
 		}
+		// 注意统计以 c 为起点的链的答案，注意深度的限制（两棵子树都要注意） 
 	}
 	// kth_par should exist
 	int kth_par(int x,int k){
