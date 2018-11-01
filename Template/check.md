@@ -2,7 +2,7 @@
 
 ## 队员模板
 
-yy的模板 + Polya.doc
+yy的模板 + Polya.doc + GEO
 
 fb的模板 + hanabi的模板
 
@@ -19,6 +19,8 @@ fzu集训队资料
 2018-fzu-final-template
 
 2017-fzu-final-template
+
+上交板子
 
 ## 论文
 
