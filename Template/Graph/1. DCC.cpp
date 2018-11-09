@@ -1,5 +1,6 @@
+// cactus: n multi by 2
 // key is cuts
-// dcc is edges , i->j , i(points) , j(bcc_block)
+// dcc i->j , i(points) , j(bcc_block)
 // st is stack
 // _st is top of stack
 // _ is number of dcc
