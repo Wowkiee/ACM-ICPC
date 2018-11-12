@@ -13,56 +13,19 @@ using namespace std;
 #define pw(x) (1ll<<(x))
 #define endl "\n"
 typedef __int128 ll;
-typedef double db;
+typedef long double db;
 typedef pair<ll, ll> pii;
 typedef vector<int> vi;
 
 const int N = 2020, P = 998244353;
-const db pi = acos(-1), eps = 1e-8;
+const db eps = 1e-10;
 
-int sign(db x) {
-	return (x > eps) - (x < -eps);
-}
-
-int n, pw3;
-//int prex[N][N], prey[N][N];
+int n, m, pw3;
 pii p[N], vec[N][N];
-
-int add(int a, int b) {
-	if(a < 0) a += P;
-	if(b < 0) b += P;
-	if((a += b) >= P) a -= P;
-	return a;
-}
-int sub(int a, int b) {
-	if(a < 0) a += P;
-	if(b < 0) b += P;
-	if((a -= b) < 0) a += P;
-	return a;
-}
-int mul(int a, int b) {
-	if(a < 0) a += P;
-	if(b < 0) b += P;
-	return 1ll * a * b % P;
-}
-int kpow(int a, int b) {
-	int r = 1;
-	while(b) {
-		if(b & 1) r = mul(a, r);
-		a = mul(a, a);
-		b >>= 1;
-	}
-	return r;
-}
+pair<int, int> val[N][N];
 
 pii operator - (const pii &a, const pii &b) {
 	return mp(a.fi - b.fi, a.se - b.se);
-}
-db ang(const pii &a) {
-	return atan2((db)a.se, (db)a.fi);
-}
-bool cmp(const pii &a, const pii &b) {
-	return atan2((db)a.se, (db)a.fi) < atan2((db)b.se, (db)b.fi);
 }
 ll cross(const pii &a, const pii &b) {
 	return a.fi * b.se - a.se * b.fi;
@@ -70,25 +33,42 @@ ll cross(const pii &a, const pii &b) {
 ll dot(const pii &a, const pii &b) {
 	return a.fi * b.fi + a.se * b.se;
 }
-void print(ll x) {
-	cout << (long long)x;
+bool cmp(const pii &a, const pii &b) {
+	int o = a > pii(0, 0), t = b > pii(0, 0);
+	if(o != t) return o < t;
+	return cross(a, b) > 0;
 }
-void print(pii a) {
-	print(a.fi);cout << " ";
-	print(a.se);cout << " ";
-}
-
-/*
-bool check(const pii &a, const pii &b) {
-	ll t = cross(a, b);
+bool check(int i, int j, int r) {
+	ll t = cross(vec[i][j], vec[i][r]);
 	if(t > 0) return 1;
 	if(t < 0) return 0;
+	return dot(vec[i][j], vec[i][r]) > 0;
 }
-*/
-
+void add(int &a, int b) {
+	if((a += b) >= P) a -= P;
+}
+void sub(int &a, int b) {
+	if((a -= b) < 0) a += P;
+}
+int mul(int a, int b) {
+	return 1ll * a * b % P;
+}
+int kpow(int a, int b) {
+	int r = 1;
+	while(b) {
+		if(b & 1) r = mul(r, a);
+		a = mul(a, a);
+		b >>= 1;
+	}
+	return r;
+}
+bool che(const pii &a, const pii &b) {
+	if(cross(a, b)) return 1;
+	return dot(a, b) < 0;
+}
 int main() {
-//	std::ios::sync_with_stdio(0);
-//	std::cin.tie(0);
+	std::ios::sync_with_stdio(0);
+	std::cin.tie(0);
 	int T;
 	cin >> T;
 	pw3 = kpow(3, P - 2);
@@ -99,73 +79,48 @@ int main() {
 			cin >> x >> y;
 			p[i] = mp(x, y);
 		}
+		m = n - 1;
 		rep(i, 0, n) rep(j, 0, n) if(j != i) vec[i][j - (j > i)] = p[j] - p[i];
-		int t = n - 1;
-		rep(i, 0, n) sort(vec[i], vec[i] + t, cmp);
-		///solve
-		ll tot = 0, ans = 0;
-		rep(i, 0, n) {
-			rep(j, 0, t) print(vec[i][j]), cout << endl;
-			int k = 0, sumx = vec[i][0].fi % P, sumy = vec[i][0].se % P;
-			if(sumx < 0) sumx += P;
-			if(sumy < 0) sumy += P;
-			int l = 0, sx = sumx, sy = sumy;
-			int cnt = 1;
-			rep(j, 0, t) {
-				//while((k + 1) % t != j && check(vec[i][j], vec[i][(k + 1) % t])) {//cross(vec[i][j], vec[i][(k + 1) % t]) >= 0) {
-				if(j == 0 || sign(ang(vec[i][j - 1]) - ang(vec[i][j]))) while((k + 1) % t != j && cross(vec[i][j], vec[i][(k + 1) % t]) >= 0) {
-					k = (k + 1) % t;
-					sumx = add(sumx, vec[i][k].fi % P);
-					sumy = add(sumy, vec[i][k].se % P);
-					sx = add(sx, vec[i][k].fi % P);
-					sy = add(sy, vec[i][k].se % P);
-					++cnt;
-				}
-				while(cnt >= 0 && dot(vec[i][j], vec[i][(l + 1) % t]) >= 0) {
-					l = (l + 1) % t;
-					sx = sub(sx, vec[i][l].fi % P);
-					sy = sub(sy, vec[i][l].se % P);
-					--cnt;
-				}
-				dd(j), dd(l), de(k);
-		//		dd(j), dd(k), dd(sumx), de(sumy);
-				tot = add(tot, mul(vec[i][j].fi % P, sumy));
-				tot = sub(tot, mul(vec[i][j].se % P, sumx));
-				ans = add(ans, mul(vec[i][j].fi % P, sy));
-				ans = sub(ans, mul(vec[i][j].se % P, sx));
-				sumx = sub(sumx, vec[i][j].fi % P);
-				sumy = sub(sumy, vec[i][j].se % P);
-				if(k == j) {
-					k = (k + 1) % t;
-					sumx = add(sumx, vec[i][k].fi % P);
-					sumy = add(sumy, vec[i][k].se % P);
-					sx = add(sx, vec[i][k].fi % P);
-					sy = add(sy, vec[i][k].se % P);
-					++cnt;
-				}
-				if(l == j && cnt) {
-					l = (l + 1) % t;
-					sx = sub(sx, vec[i][l].fi % P);
-					sy = sub(sy, vec[i][l].se % P);
-					--cnt;
-				}
-				dd("------");print(ans);cout << endl;
-			}
-			print(ans);
-			cout << endl;
-			cout << endl;
+		rep(i, 0, n) sort(vec[i], vec[i] + m, cmp);
+		rep(i, 0, n) rep(j, 0, m) {
+			auto t = vec[i][j];
+			t.fi %= P, t.se %= P;
+			if(t.fi < 0) t.fi += P;
+			if(t.se < 0) t.se += P;
+			val[i][j] = t;
 		}
-		print(ans);cout << endl;
-		print(tot);cout << endl;
-		/*
+		int tot = 0, ans = 0;
+		rep(i, 0, n) {
+			int l = 0, r = 0, c = 0, cnt = 0;
+			int sumx = 0, sumy = 0, sx = 0, sy = 0;
+			rep(j, 0, m) {
+				if(j == 0 || che(vec[i][j], vec[i][j - 1])) while(c < m && check(i, j, r)) {
+					++cnt;
+					++c;
+					add(sumx, val[i][r].fi);
+					add(sumy, val[i][r].se);
+					add(sx, val[i][r].fi);
+					add(sy, val[i][r].se);
+					r = (r + 1) % m;
+				}
+				while(cnt && dot(vec[i][j], vec[i][l]) > 0) {
+					--cnt;
+					sub(sx, val[i][l].fi);
+					sub(sy, val[i][l].se);
+					l = (l + 1) % m;
+				}
+				add(tot, mul(val[i][j].fi, sumy));
+				sub(tot, mul(val[i][j].se, sumx));
+				add(ans, mul(val[i][j].fi, sy));
+				sub(ans, mul(val[i][j].se, sx));
+				--c;
+				sub(sumx, val[i][j].fi);
+				sub(sumy, val[i][j].se);
+			}
+		}
 		tot = mul(tot, pw3);
-		print(tot);cout << endl;
-		tot = sub(tot, ans);
-		print(ans);cout << endl;
+		sub(tot, ans);
 		cout << (int)tot << endl;
-	//	print(tot);
-		cout << endl;
-		*/
 	}
 	return 0;
 }
