@@ -1,7 +1,7 @@
 /*
  * length of pa is two size of str
- * pa[i<<1] : odd string 整个回文长度为 2*pa[i<<1]-1
- * pa[i<<1|1] : even string 整个回文长度为 2*pa[i<<1]
+ * i: [0, n)     pa[i<<1] : odd string 整个回文长度为 2*pa[i<<1]-1
+ * i: [0, n - 1) pa[i<<1|1] : even string 整个回文长度为 2*pa[i<<1]
  * N>2*n
 */
 void Manacher(char *s,int n,int *pa){
