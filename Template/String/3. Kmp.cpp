@@ -1,4 +1,4 @@
-/*
+/* 
 t:  a  b  a 
 nt:-1 -1  0 
 s:  a  b  a  c  a  b  a 

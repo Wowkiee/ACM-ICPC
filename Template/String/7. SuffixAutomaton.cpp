@@ -56,7 +56,7 @@ struct SAM {
 		}
 		rep(i, 1, L + 1) ++cc[l[i]];
 		rep(i, 1, L + 1) cc[i] += cc[i - 1];
-		rep(i, 1, L + 1) cur[--cc[l[i]]] = i;
+		rep(i, 1, L + 1) cur[cc[l[i]]--] = i;
 		for(int i = L; i >= 2; --i) {
 			int u = cur[i];
 			right[par[u]] += right[u];
