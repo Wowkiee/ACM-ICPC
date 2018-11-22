@@ -29,7 +29,7 @@ struct LongChain{
 		for(auto t : g[c]) if(t != fa && t != wson[c]) {
 			// brute force upd c by t
 		}
-		// ×¢ÒâÍ³¼ÆÒÔ c ÎªÆğµãµÄÁ´µÄ´ğ°¸£¬×¢ÒâÉî¶ÈµÄÏŞÖÆ£¨Á½¿Ã×ÓÊ÷¶¼Òª×¢Òâ£© 
+		// æ³¨æ„ç»Ÿè®¡ä»¥ c ä¸ºèµ·ç‚¹çš„é“¾çš„ç­”æ¡ˆï¼Œæ³¨æ„æ·±åº¦çš„é™åˆ¶ï¼ˆä¸¤æ£µå­æ ‘éƒ½è¦æ³¨æ„ï¼‰ 
 	}
 	// kth_par should exist
 	int kth_par(int x,int k){

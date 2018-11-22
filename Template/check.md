@@ -2,17 +2,19 @@
 
 ## 队员模板
 
-yy的模板 + Polya.doc + GEO
+yy的模板 + Polya.doc
 
 fb的模板 + hanabi的模板
 
-xf的模板 + andWho的模板 + mcginn的模板
+xf的模板
 
 ## 大佬的模板
 
-CheatSheet
-
 zp的模板
+
+mcginn的模板
+
+andWho的模板
 
 fzu集训队资料
 
@@ -20,9 +22,11 @@ fzu集训队资料
 
 2017-fzu-final-template
 
-上交板子
+上交模板
 
-## 论文
+## 论文 
+
+CheatSheet
 
 后缀数组——处理字符串的有力工具
 

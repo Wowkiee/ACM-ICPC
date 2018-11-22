@@ -13,8 +13,8 @@ namespace Centriod {
         vis[rt] = true;
         /*
          * calc
-         * ×¢Òâ¼ÆËãÒÔ rt ÎªÆğµãµÄÂ·¾¶¡¢Ö»°üº¬ rt µÄÂ·¾¶
-		 * ×¢Òâ v != vis[rt] 
+         * æ³¨æ„è®¡ç®—ä»¥ rt ä¸ºèµ·ç‚¹çš„è·¯å¾„ã€åªåŒ…å« rt çš„è·¯å¾„
+		 * æ³¨æ„ v != vis[rt] 
 		 */
         for(auto t : g[rt]) if(!vis[t]) dfs(t);
     }
