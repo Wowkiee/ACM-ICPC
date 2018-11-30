@@ -1,8 +1,10 @@
+// need init
+// 1. use id
+// 2. init mi/nd as max/min val
 struct Node {
     ll k, b;
-    int id;
-    Node() : k(0), b(0), id(0) {}
-    Node(ll k, ll b, int id) : k(k), b(b), id(id) {}
+    Node() : k(0), b(0) {}
+    Node(ll k, ll b) : k(k), b(b) {}
     ll getf(int x) const {
         return k * x + b;
     }
