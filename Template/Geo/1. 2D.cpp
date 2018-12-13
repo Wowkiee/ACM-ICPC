@@ -3,87 +3,6 @@
  * 直线的一般式： Ax+By+C=0
  * 点到直线的距离： |Ax0+By0+C|/sqrt(A*A+B*B)
 */
-#include<bits/stdc++.h>
-using namespace std;
-#define fi first
-#define se second
-#define pb push_back
-#define mp make_pair
-#define sz(a) (int)a.size()
-#define de(x) cout << #x << " = " << x << endl;
-#define rep(i,a,b) for(int i=(a);i<(b);++i)
-#define x(a) a.x
-#define y(a) a.y
-typedef double db;
-const db eps = 1e-8;
-const db pi = acos(-1);
-
-// 负数 -1 零  0 正数  1
-int sign(db x) {
-    return (x > eps) - (x < -eps);
-}
-
-struct P {
-    db x,y;
-    P() {}
-    P(db x, db y) {
-        this->x = x;
-        this->y = y;
-    }
-    P operator + (const P &c) const {
-        return P(x + c.x, y + c.y);
-    }
-    P operator - (const P &c) const {
-        return P(x - c.x, y - c.y);
-    }
-    P operator * (const db &c) const {
-        return P(x * c, y * c);
-    }
-    P operator / (const db &c) const {
-        return P(x / c, y / c);
-    }
-    bool operator < (const P &c) const {
-        int f = sign(x - c.x);
-        return f ? f < 0 : sign(y - c.y) < 0;
-    }
-    bool operator == (const P &c) const {
-        return !sign(x - c.x) && !sign(y - c.y);
-    }
-    bool operator != (const P &c) const {
-        return !(*this == c);
-    }
-    bool operator > (const P &c) const {
-        return !(*this == c) && !(*this < c);
-    }
-};
-
-P read() {
-    db x,y;scanf("%lf%lf", &x, &y);
-    return P(x, y);
-}
-void print(P p) {
-	printf("%f %f\n",x(p),y(p));
-}
-db abs(P a) {
-    return sqrt(x(a) * x(a) + y(a) * y(a));
-}
-db norm(P a) {
-    return x(a) * x(a) + y(a) * y(a);
-}
-db dot(P a, P b) {
-    return x(a) * x(b) + y(a) * y(b);
-}
-db cross(P a, P b) {
-    return x(a) * y(b) - x(b) * y(a);
-}
-// 两点距离的平方
-db disq(P a, P b) {
-    return norm(a - b);
-}
-// 两点距离
-db dis(P a, P b) {
-    return sqrt(norm(a - b));
-}
 // 向量 ab 与 x 轴的夹角，弧度，取值范围 (-pi, pi]
 db ang(P a, P b) {
     return atan2(y(b)-y(a),x(b)-x(a));
@@ -215,10 +134,6 @@ int convexhull(P *p, int n, P *ch) {
 }
 
 struct C {
-	P o;
-	db r;
-	C() {}
-	C(P o, db r) : o(o), r(r) {}
 	// 通过圆心角（弧度）求圆上坐标
 	P point(db rad) {
 		return P(o.x + cos(rad) * r, o.y + sin(rad) * r);
